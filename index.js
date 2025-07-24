@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/enviar-notificacion", async (req, res) => {
-  const { tokenFCM, opcion } = req.body;
+  const { ee5NWbyVTtSl_JgLxCiwVc:APA91bFJoQ_9GtfPqlLCUay3N3dBDA8qn5EvAagL2k5CFdL6dwEdbI7_trhCAcVmo27-a7FWsoYFcvQpkcsS8O4BCgjF_WUbeog16igQl1EcFZIbtcjqTvU, opcion } = req.body;
 
   let message;
   switch (opcion) {
