@@ -26,6 +26,22 @@ const app = express();
 app.use(cors()); // ✅ Para permitir peticiones desde frontend
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "API de Notificaciones FCM operativa",
+    endpoints: {
+      enviar_notificacion: {
+        method: "POST",
+        url: "/enviar-notificacion",
+        body_format: {
+          tokenFCM: "string (token del dispositivo)",
+          opcion: "1, 2 o 3"
+        }
+      }
+    }
+  });
+});
+
 app.post("/enviar-notificacion", async (req, res) => {
   const { tokenFCM, opcion } = req.body;
 
@@ -72,7 +88,7 @@ app.post("/enviar-notificacion", async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
 });
