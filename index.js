@@ -72,24 +72,21 @@ app.post("/enviar-notificacion", async (req, res) => {
   const message = {
     token: tokenFCM,
 
-    // Usando "data" en lugar de "notification" para que la app
-    // siempre maneje la notificación via onMessageReceived,
-    // tanto en foreground como en background.
+    // Solo "data" — sin ningún bloque "notification" en ningún nivel.
+    // Esto garantiza que Firebase SIEMPRE entregue el mensaje a
+    // onMessageReceived(), tanto en foreground como en background.
+    // La app construye y muestra la notificación visualmente.
     data: {
-      title: titulo,
-      body:  cuerpo,
+      title:  titulo,
+      body:   cuerpo,
       opcion: String(opcion)
     },
 
     android: {
-      priority: "high",           // entrega inmediata aunque el dispositivo esté en Doze
-      ttl:      86400 * 1000,     // tiempo de vida: 24 horas en milisegundos
-      notification: {
-        channel_id:   CHANNEL_ID, // canal registrado en la app
-        icon:         "ic_notification", // nombre del drawable en res/drawable
-        color:        "#BEAEE2",  // color del icono (mismo que usas en la notificación)
-        click_action: "OPEN_GPS_ACTIVITY"
-      }
+      priority: "high",        // entrega inmediata aunque el dispositivo esté en Doze
+      ttl:      86400 * 1000,  // tiempo de vida: 24 horas en milisegundos
+      // SIN android.notification — si existe, Firebase lo convierte
+      // en notification message y el sistema lo maneja sin pasar por la app
     }
   };
 
